@@ -3,6 +3,7 @@ package com.elisariane.minha_tcc_backend.controller;
 import com.elisariane.minha_tcc_backend.models.User;
 import com.elisariane.minha_tcc_backend.models.dtos.LoginRequest;
 import com.elisariane.minha_tcc_backend.models.dtos.RegisterRequest;
+import com.elisariane.minha_tcc_backend.models.enums.Role;
 import com.elisariane.minha_tcc_backend.service.AuthService;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class AuthController {
         user.setName(registerRequest.name());
         user.setEmail(registerRequest.email());
         user.setPassword(registerRequest.password());
-        user.setRole(registerRequest.role());
+        user.setRole(registerRequest.role() == null ? Role.ROLE_USER : registerRequest.role());
         authService.registerUser(user);
 
         return ResponseEntity.ok("Usuário de e-mail " + user.getEmail() + " cadastrado com sucesso!");
